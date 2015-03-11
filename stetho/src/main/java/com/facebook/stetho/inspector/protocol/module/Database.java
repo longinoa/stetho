@@ -76,6 +76,14 @@ public class Database implements ChromeDevtoolsDomain {
           response.values = flattenRows(result, MAX_EXECUTE_RESULTS);
           return response;
         }
+
+        @Override
+        public ExecuteSQLResponse handleResult(Long value, String name) throws SQLiteException {
+          ExecuteSQLResponse response = new ExecuteSQLResponse();
+          response.columnNames = Arrays.asList(name);
+          response.values = Arrays.asList((Object)value);
+          return response;
+        }
       });
     } catch (SQLiteException e) {
       Error error = new Error();
